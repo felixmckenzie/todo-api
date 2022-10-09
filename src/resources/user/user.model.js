@@ -1,4 +1,4 @@
-import mongoose, {Schema} from 'mongoose'
+import mongoose, { Schema } from 'mongoose'
 import bcrypt from 'bcrypt'
 
 const userSchema = new Schema(
@@ -14,22 +14,12 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    settings: {
-      theme: {
-        type: String,
-        required: true,
-        default: 'dark',
-      },
-      notifications: {
-        type: Boolean,
-        required: true,
-        default: true,
-      },
-      lists: [{
+    lists: [
+      {
         type: Schema.Types.ObjectId,
-        ref: 'list'
-      }]
-    },
+        ref: 'list',
+      },
+    ],
   },
   { timestamps: true }
 )
