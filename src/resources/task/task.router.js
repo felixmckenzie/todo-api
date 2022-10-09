@@ -1,13 +1,13 @@
 import { Router } from 'express'
-import { controllers } from './item.controller'
+import controllers from './task.controller'
 const router = Router()
 
-// /api/item
+// /api/list/:id
 router.route('/').get(controllers.getMany).post(controllers.createOne)
 
-// /api/item/:id
+// /api/list/:id/task/:id
 router
-  .route('/:id')
+  .route('task/:id')
   .get(controllers.getOne)
   .delete(controllers.removeOne)
   .put(controllers.updateOne)

@@ -1,4 +1,5 @@
-export const getOne = (model) => async (req, res) => {};
+export const getOne = (model) => async (req, res) => {
+};
 
 export const getMany = (model) => async (req, res) => {};
 
