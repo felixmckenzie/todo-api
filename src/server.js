@@ -2,6 +2,7 @@ import express from 'express'
 import { json, urlencoded } from 'body-parser'
 import morgan from 'morgan'
 import cors from 'cors'
+import {signUp, signIn, protect} from './utils/auth'
 import taskRouter from './resources/task/task.router'
 import listRouter from './resources/list/list.router'
 import userRouter from './resources/user/user.router'
@@ -14,6 +15,11 @@ app.use(json())
 app.use(urlencoded({ extended: true }))
 app.use(morgan('dev'))
 
+
+app.post('/signup', signUp)
+app.post('/signin', signIn)
+
+app.use('/api', protect)
 app.use('/api/list/:id', taskRouter)
 app.use('/api/list', listRouter)
 app.use('/api/user', userRouter)
