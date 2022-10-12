@@ -19,6 +19,9 @@ export const signUp = async (req, res) => {
   if (!req.body.email || !req.body.password) {
     return res.status(400).send({ message: 'email and password required' })
   }
+  if (!req.body.username) {
+    return res.status(400).send({ message: 'username required' })
+  }
 
   try {
     const user = await User.create(req.body)
@@ -66,8 +69,9 @@ export const protect = async (req, res) => {
     return res.status(401).end()
   }
   const token = bearer.split('Bearer ')[1].trim()
+  let payload;
   try {
-    const payload = await verifyToken(token)
+   payload = await verifyToken(token)
   } catch (e) {
     return res.status(401).end()
   }
