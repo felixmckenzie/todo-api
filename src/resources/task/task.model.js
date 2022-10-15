@@ -22,7 +22,7 @@ const taskSchema = new Schema(
         ref: 'user',
         required: true
     },
-    list:{
+    listId:{
         type: Schema.Types.ObjectId,
         ref: 'list',
         required: true

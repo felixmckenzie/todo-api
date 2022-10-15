@@ -21,16 +21,15 @@ app.post('/signup', signUp)
 app.post('/signin', signIn)
 
 app.use('/api', protect)
-app.use('/api/list/:id', taskRouter)
 app.use('/api/list', listRouter)
+app.use('/api/list/:list_id', taskRouter)
 app.use('/api/user', userRouter)
-
 
 export const start = async () => {
   try {
     connectDb()
     app.listen(process.env.PORT, () => {
-      console.log('listening on port 3000')
+      console.log('listening on port 8080')
     })
   } catch (e) {
     console.log(e)

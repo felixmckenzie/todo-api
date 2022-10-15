@@ -5,9 +5,9 @@ const router = Router()
 // /api/list/:id
 router.route('/').get(controllers.getMany).post(controllers.createOne)
 
-// /api/list/:id/task/:id
+// /api/list/:list_id/task/:task_id
 router
-  .route('task/:id')
+  .route('task/:task_id')
   .get(controllers.getOne)
   .delete(controllers.removeOne)
   .put(controllers.updateOne)

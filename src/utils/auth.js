@@ -38,7 +38,7 @@ export const signIn = async (req, res) => {
   }
 
   try {
-    const user = User.findOne({
+    const user = await User.findOne({
       email: req.body.email,
     })
       .select('email password')
@@ -48,7 +48,8 @@ export const signIn = async (req, res) => {
       res.status(401).send({ message: 'invalid username or password' })
     }
 
-    const match = await user.checkPassword(req.body.password)
+   
+    const match = user.checkPassword(req.body.password)
 
     if (!match) {
       res.status(401).send({ message: 'invalid username or password' })

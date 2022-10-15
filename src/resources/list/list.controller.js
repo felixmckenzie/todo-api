@@ -26,7 +26,7 @@ export const getMany = (model) => async (req, res) => {
     const docs = await model
       .find({
         createdBy: req.user.id,
-      })
+      }).populate('tasks')
       .lean()
       .exec()
 

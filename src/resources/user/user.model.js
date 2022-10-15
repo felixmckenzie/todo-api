@@ -28,6 +28,7 @@ const userSchema = new Schema(
   { timestamps: true }
 )
 
+
 userSchema.pre('save', function (next) {
   if (!this.isModified('password')) {
     return next()
@@ -55,4 +56,6 @@ userSchema.methods.checkPassword = function (password) {
   })
 }
 
+
 export const User = mongoose.model('user', userSchema)
+
