@@ -7,9 +7,10 @@ export const newToken = (user) => {
 }
 
 export const verifyToken = async (token) => {
-  new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, payload) => {
       if (err) return reject(err)
+      console.log(payload)
       resolve(payload)
     })
   })
@@ -57,30 +58,28 @@ export const signIn = async (req, res) => {
 
     const token = newToken(user)
 
-    return res.status(201).send({ token })
+    return res.status(201).send({ token }) 
   } catch (e) {
     console.log(e)
     return res.status(500).end()
   }
 }
 
-export const protect = async (req, res) => {
+export const protect = async (req, res, next) => {
   const bearer = req.headers.authorization
   if (!bearer) {
     return res.status(401).end()
   }
   const token = bearer.split('Bearer ')[1].trim()
-  let payload;
+  
   try {
-   payload = await verifyToken(token)
-  } catch (e) {
-    return res.status(401).end()
-  }
-
-  const user = await User.findById(payload.id).select('-password').lean().exec()
-  if (!user) {
-    return res.status(401).end()
-  }
+  const payload = await verifyToken(token)
+  console.log(payload)
+  const user = await User.findById(payload.id).select('-password').exec()
   req.user = user
-  next()
+   next() 
+  } catch (e) {
+    console.log(e)
+    return res.status(401).end()
+  }
 }
