@@ -14,7 +14,7 @@ export const getOne = (model) => async (req, res) => {
       return res.status(400).end()
     }
 
-    res.status(200).json({ data: doc })
+    res.status(200).json(doc)
   } catch (e) {
     console.log(e)
     res.status(400).end()

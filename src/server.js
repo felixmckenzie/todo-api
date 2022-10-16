@@ -22,7 +22,7 @@ app.post('/signin', signIn)
 
 app.use('/api', protect)
 app.use('/api/list', listRouter)
-app.use('/api/list/:list_id', taskRouter)
+app.use('/api/list/:listId', taskRouter)
 app.use('/api/user', userRouter)
 
 export const start = async () => {
