@@ -38,7 +38,9 @@ export const createOne = (model) => async (req, res) => {
   const listId = req.params.listId
   try {
     const doc = await model.create({ ...req.body, createdBy, listId })
-    await List.findByIdAndUpdate(listId, { $push: { tasks: doc } }, {new:true})
+    const list = await List.findById(listId)
+    list.tasks.push(doc)
+    list.save()
     res.status(201).json({ data: doc })
   } catch (e) {
     console.log(e)
@@ -73,15 +75,11 @@ export const removeOne = (model) => async (req, res) => {
   try {
     const removed = await model.findOneAndRemove({
       createdBy: req.user._id,
-      _id: req.params.task_id,
+      _id: req.params.taskId,
     })
     if (!removed) {
       return res.status(400).end()
     }
-
-    const listToUpdate = await List.findById(req.params.list_id)
-    await listToUpdate.tasks.id(req.params.task_id).remove()
-    await listToUpdate.save()
     return res.status(200).json({ data: removed })
   } catch (e) {
     console.log(e)

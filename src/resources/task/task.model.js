@@ -16,7 +16,7 @@ const taskSchema = new Schema(
       type: Boolean,
       required: true,
     },
-    created: Date,
+    
     createdBy:{
         type: Schema.Types.ObjectId,
         ref: 'user',
@@ -31,4 +31,4 @@ const taskSchema = new Schema(
   { timestamps: true }
 )
 
-export const Item = mongoose.model('task', taskSchema)
+export const Task = mongoose.model('task', taskSchema)

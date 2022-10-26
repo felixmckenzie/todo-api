@@ -3,14 +3,14 @@ import jwt from 'jsonwebtoken'
 import { User } from '../resources/user/user.model'
 
 export const newToken = (user) => {
-  return jwt.sign({ id: user.id }, process.env.ACCESS_TOKEN_SECRET)
+  const token =  jwt.sign({ id: user.id }, process.env.ACCESS_TOKEN_SECRET)
+  return token
 }
 
 export const verifyToken = async (token) => {
     return new Promise((resolve, reject) => {
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, payload) => {
       if (err) return reject(err)
-      console.log(payload)
       resolve(payload)
     })
   })
@@ -27,7 +27,7 @@ export const signUp = async (req, res) => {
   try {
     const user = await User.create(req.body)
     const token = newToken(user)
-    return res.status(201).send({ token })
+    return res.status(201).send({ token})
   } catch (e) {
     return res.status(500).end()
   }
@@ -57,8 +57,7 @@ export const signIn = async (req, res) => {
     }
 
     const token = newToken(user)
-
-    return res.status(201).send({ token }) 
+    return res.status(201).send({ token, user}) 
   } catch (e) {
     console.log(e)
     return res.status(500).end()
